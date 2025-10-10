@@ -120,6 +120,13 @@ const styles = StyleSheet.create({
     height: width * 0.4,
     marginBottom: 30,
   },
+  logoFallback: {
+    width: width * 0.4,
+    height: width * 0.4,
+    marginBottom: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   textContainer: {
     alignItems: 'center',
     marginTop: -height * 0.1,
