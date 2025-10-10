@@ -54,14 +54,14 @@ const Step3Screen = () => {
 
   const handleNext = () => {
     const cordobasData = {
-      cordobas_1: parseInt(counts[1] || '0'),
-      cordobas_5: parseInt(counts[5] || '0'),
-      cordobas_10: parseInt(counts[10] || '0'),
-      cordobas_20: parseInt(counts[20] || '0'),
-      cordobas_50: parseInt(counts[50] || '0'),
-      cordobas_100: parseInt(counts[100] || '0'),
-      cordobas_500: parseInt(counts[500] || '0'),
-      totalCordobas: total,
+      cordobas_1: (parseInt(counts[1] || '0')).toString(),
+      cordobas_5: (parseInt(counts[5] || '0')).toString(),
+      cordobas_10: (parseInt(counts[10] || '0')).toString(),
+      cordobas_20: (parseInt(counts[20] || '0')).toString(),
+      cordobas_50: (parseInt(counts[50] || '0')).toString(),
+      cordobas_100: (parseInt(counts[100] || '0')).toString(),
+      cordobas_500: (parseInt(counts[500] || '0')).toString(),
+      totalCordobas: total.toString(),
     };
 
     router.push({
