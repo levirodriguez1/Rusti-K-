@@ -27,7 +27,7 @@ const Step2Screen = () => {
       pathname: '/wizard/step3',
       params: {
         ...params,
-        ventaTarjetas,
+        ventaTarjetas: ventaTarjetas,
       },
     });
   };
