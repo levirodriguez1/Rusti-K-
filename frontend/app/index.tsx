@@ -9,6 +9,7 @@ const { width, height } = Dimensions.get('window');
 const WelcomeScreen = () => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.8)).current;
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     // Logo animation
