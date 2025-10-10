@@ -54,6 +54,10 @@ const WelcomeScreen = () => {
             source={{ uri: 'https://customer-assets.emergentagent.com/job_cash-flow-mobile/artifacts/nn5126wi_1760107880526.png' }}
             style={styles.logo}
             resizeMode="contain"
+            onError={(error) => {
+              console.log('Error loading logo:', error);
+            }}
+            defaultSource={require('../assets/images/icon.png')}
           />
         </Animated.View>
 
