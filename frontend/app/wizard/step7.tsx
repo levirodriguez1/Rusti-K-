@@ -44,14 +44,15 @@ const Step7Screen = () => {
 👥 Responsable: ${responsable}
 📅 Fecha: ${fecha}
 
-💰 *RESUMEN FINANCIERO:*
-• Fondo Inicial: C$ ${fondoInicial.toFixed(2)}
+💰 *RESUMEN DE VENTAS:*
 • Ventas Tarjetas: C$ ${ventaTarjetas.toFixed(2)}
 • Total Córdobas: C$ ${totalCordobas.toFixed(2)}
 • Total Dólares: US$ ${totalDolares.toFixed(2)} (C$ ${totalDolaresCordobas.toFixed(2)})
-• Total Gastos: C$ ${totalGastos.toFixed(2)}
+• Total Gastos: -C$ ${totalGastos.toFixed(2)}
 
-🎯 *TOTAL FINAL: C$ ${totalFinal.toFixed(2)}*
+🎯 *TOTAL NETO DE VENTAS: C$ ${totalFinal.toFixed(2)}*
+
+📌 *Nota:* El fondo inicial (C$ ${fondoInicial.toFixed(2)}) se mantiene separado del cálculo de ventas netas.
 
 _Generado por ARQUEO - Sistema de Gestión Financiera_`;
   };
