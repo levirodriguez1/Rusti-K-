@@ -1,0 +1,172 @@
+#!/usr/bin/env python3
+"""
+ARQUEO Calculation Verification Test
+Specifically tests the corrected calculation logic where total_final excludes fondo_inicial
+"""
+
+import requests
+import json
+
+# Backend URL
+BACKEND_URL = "https://cash-flow-mobile.preview.emergentagent.com/api"
+
+def test_calculation_verification():
+    """Test the specific calculation requirements from the review request"""
+    print("🔍 ARQUEO CALCULATION VERIFICATION TEST")
+    print("=" * 60)
+    
+    # Exact sample data from review request
+    sample_data = {
+        "tienda": "Test Store",
+        "responsable": "Test User", 
+        "fondo_inicial": 2000.0,
+        "venta_tarjetas": 1000.0,
+        "cordobas_500": 2,
+        "dolares_100": 1,
+        "gastos": [{"concepto": "Test Expense", "monto": 200.0}]
+    }
+    
+    print("📋 Sample Test Data:")
+    print(f"   Tienda: {sample_data['tienda']}")
+    print(f"   Responsable: {sample_data['responsable']}")
+    print(f"   Fondo Inicial: {sample_data['fondo_inicial']}")
+    print(f"   Venta Tarjetas: {sample_data['venta_tarjetas']}")
+    print(f"   Córdobas 500: {sample_data['cordobas_500']} bills")
+    print(f"   Dólares 100: {sample_data['dolares_100']} bills")
+    print(f"   Gastos: {sample_data['gastos']}")
+    
+    print("\n📊 Expected Calculations:")
+    expected_cordobas = 2 * 500  # 1000.0
+    expected_dolares = 1 * 100   # 100.0
+    expected_dolares_cordobas = 100.0 * 36.5  # 3650.0
+    expected_gastos = 200.0
+    expected_total_final = 1000.0 + 1000.0 + 3650.0 - 200.0  # 5450.0
+    
+    print(f"   Ventas Tarjetas: {sample_data['venta_tarjetas']}")
+    print(f"   Total Córdobas: {expected_cordobas} (2 × 500)")
+    print(f"   Total Dólares Córdobas: {expected_dolares_cordobas} (1 × 100 × 36.5)")
+    print(f"   Total Gastos: {expected_gastos}")
+    print(f"   Total Final Expected: {expected_total_final}")
+    print(f"   ⚠️  Fondo inicial ({sample_data['fondo_inicial']}) should NOT be included")
+    
+    try:
+        print("\n🚀 Creating ARQUEO...")
+        response = requests.post(f"{BACKEND_URL}/arqueo", json=sample_data)
+        
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ ARQUEO created with ID: {result['id']}")
+            
+            print("\n🔍 Actual Results:")
+            print(f"   Venta Tarjetas: {result['venta_tarjetas']}")
+            print(f"   Total Córdobas: {result['total_cordobas']}")
+            print(f"   Total Dólares: {result['total_dolares']}")
+            print(f"   Total Dólares Córdobas: {result['total_dolares_cordobas']}")
+            print(f"   Total Gastos: {result['total_gastos']}")
+            print(f"   Fondo Inicial: {result['fondo_inicial']}")
+            print(f"   Total Final: {result['total_final']}")
+            
+            print("\n✅ VERIFICATION RESULTS:")
+            
+            # Check each calculation
+            checks = []
+            
+            if result['venta_tarjetas'] == sample_data['venta_tarjetas']:
+                print(f"   ✅ Venta Tarjetas: {result['venta_tarjetas']} (CORRECT)")
+                checks.append(True)
+            else:
+                print(f"   ❌ Venta Tarjetas: Expected {sample_data['venta_tarjetas']}, Got {result['venta_tarjetas']}")
+                checks.append(False)
+            
+            if result['total_cordobas'] == expected_cordobas:
+                print(f"   ✅ Total Córdobas: {result['total_cordobas']} (CORRECT)")
+                checks.append(True)
+            else:
+                print(f"   ❌ Total Córdobas: Expected {expected_cordobas}, Got {result['total_cordobas']}")
+                checks.append(False)
+            
+            if result['total_dolares'] == expected_dolares:
+                print(f"   ✅ Total Dólares: {result['total_dolares']} (CORRECT)")
+                checks.append(True)
+            else:
+                print(f"   ❌ Total Dólares: Expected {expected_dolares}, Got {result['total_dolares']}")
+                checks.append(False)
+            
+            if result['total_dolares_cordobas'] == expected_dolares_cordobas:
+                print(f"   ✅ Total Dólares Córdobas: {result['total_dolares_cordobas']} (CORRECT)")
+                checks.append(True)
+            else:
+                print(f"   ❌ Total Dólares Córdobas: Expected {expected_dolares_cordobas}, Got {result['total_dolares_cordobas']}")
+                checks.append(False)
+            
+            if result['total_gastos'] == expected_gastos:
+                print(f"   ✅ Total Gastos: {result['total_gastos']} (CORRECT)")
+                checks.append(True)
+            else:
+                print(f"   ❌ Total Gastos: Expected {expected_gastos}, Got {result['total_gastos']}")
+                checks.append(False)
+            
+            if result['fondo_inicial'] == sample_data['fondo_inicial']:
+                print(f"   ✅ Fondo Inicial stored: {result['fondo_inicial']} (CORRECT)")
+                checks.append(True)
+            else:
+                print(f"   ❌ Fondo Inicial: Expected {sample_data['fondo_inicial']}, Got {result['fondo_inicial']}")
+                checks.append(False)
+            
+            # CRITICAL CHECK: Total Final calculation
+            if result['total_final'] == expected_total_final:
+                print(f"   ✅ Total Final: {result['total_final']} (CORRECT - EXCLUDES fondo_inicial)")
+                checks.append(True)
+            else:
+                print(f"   ❌ Total Final: Expected {expected_total_final}, Got {result['total_final']}")
+                checks.append(False)
+            
+            # Verify the calculation formula
+            manual_calculation = (
+                result['venta_tarjetas'] + 
+                result['total_cordobas'] + 
+                result['total_dolares_cordobas'] - 
+                result['total_gastos']
+            )
+            
+            if result['total_final'] == manual_calculation:
+                print(f"   ✅ Formula verification: {result['venta_tarjetas']} + {result['total_cordobas']} + {result['total_dolares_cordobas']} - {result['total_gastos']} = {manual_calculation}")
+                checks.append(True)
+            else:
+                print(f"   ❌ Formula verification failed: Expected {manual_calculation}, Got {result['total_final']}")
+                checks.append(False)
+            
+            # Check that fondo_inicial is NOT included in total_final
+            if result['fondo_inicial'] != 0 and result['total_final'] != (manual_calculation + result['fondo_inicial']):
+                print(f"   ✅ Fondo inicial ({result['fondo_inicial']}) correctly EXCLUDED from total_final")
+                checks.append(True)
+            else:
+                print(f"   ❌ Fondo inicial may be incorrectly included in total_final")
+                checks.append(False)
+            
+            print(f"\n📊 FINAL RESULT:")
+            if all(checks):
+                print("🎉 ALL CALCULATIONS ARE CORRECT!")
+                print("✅ The corrected calculation logic is working properly")
+                print("✅ Fondo inicial is correctly excluded from total_final")
+                return True
+            else:
+                failed_checks = len([c for c in checks if not c])
+                print(f"❌ {failed_checks} calculation(s) failed verification")
+                return False
+                
+        else:
+            print(f"❌ Failed to create ARQUEO: Status {response.status_code}")
+            print(f"Response: {response.text}")
+            return False
+            
+    except Exception as e:
+        print(f"❌ Test failed with error: {e}")
+        return False
+
+if __name__ == "__main__":
+    success = test_calculation_verification()
+    if success:
+        print("\n🎯 CALCULATION VERIFICATION: PASSED")
+    else:
+        print("\n💥 CALCULATION VERIFICATION: FAILED")
