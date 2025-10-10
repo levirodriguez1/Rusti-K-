@@ -181,3 +181,5 @@
     message: "Implemented complete ARQUEO mobile app with 7-screen wizard, backend APIs, and history view. Ready for comprehensive testing."
   - agent: "testing"
     message: "Backend testing completed successfully. All 5 ARQUEO API endpoints are fully functional with accurate calculations and PDF generation. MongoDB integration working. Ready for main agent to summarize and finish the implementation."
+  - agent: "testing"
+    message: "CALCULATION VERIFICATION COMPLETE: Updated ARQUEO backend calculation logic has been thoroughly tested and verified. The corrected formula (venta_tarjetas + total_cordobas + total_dolares_cordobas - total_gastos) correctly excludes fondo_inicial from total_final. Sample test with expected result 5450.0 passed all verification checks. All backend endpoints working perfectly. No issues found. Backend is ready for production use."
