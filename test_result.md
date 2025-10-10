@@ -119,6 +119,9 @@
       - working: true
         agent: "testing"
         comment: "Comprehensive backend testing completed successfully. All 5 core endpoints working: GET /api/ (root), POST /api/arqueo (create), GET /api/arqueo (list), GET /api/arqueo/{id} (get specific), POST /api/arqueo/{id}/pdf (PDF generation). Calculations verified accurate for córdobas, dollars, exchange rate (36.5), expenses, and final totals. PDF generation working with valid base64 output. MongoDB integration functional. Minor: Error handling returns 500 instead of 404 for non-existent records, but core functionality unaffected."
+      - working: true
+        agent: "testing"
+        comment: "CALCULATION VERIFICATION COMPLETED: Tested updated ARQUEO backend with corrected calculation logic. Verified that total_final correctly excludes fondo_inicial. Using sample data (fondo_inicial: 2000.0, venta_tarjetas: 1000.0, cordobas_500: 2, dolares_100: 1, gastos: 200.0), the calculation produces expected result of 5450.0 (1000 + 1000 + 3650 - 200). Formula verification: venta_tarjetas + total_cordobas + total_dolares_cordobas - total_gastos. All 5 API endpoints working perfectly. Backend is fully functional and calculation logic is correct."
 
 ## frontend:
   - task: "Create welcome screen with animation"
