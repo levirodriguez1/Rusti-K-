@@ -55,7 +55,7 @@ const Step6Screen = () => {
       totalGastos,
       totalFinal,
     });
-  }, [params]);
+  }, []); // Remove params dependency to prevent infinite loop
 
   const handleNext = () => {
     if (!isConfirmed) {
