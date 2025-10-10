@@ -57,14 +57,14 @@ const Step4Screen = () => {
 
   const handleNext = () => {
     const dolaresData = {
-      dolares_1: parseInt(counts[1] || '0'),
-      dolares_5: parseInt(counts[5] || '0'),
-      dolares_10: parseInt(counts[10] || '0'),
-      dolares_20: parseInt(counts[20] || '0'),
-      dolares_50: parseInt(counts[50] || '0'),
-      dolares_100: parseInt(counts[100] || '0'),
-      totalDolares: totalUSD,
-      totalDolaresCordobas: totalCordobas,
+      dolares_1: (parseInt(counts[1] || '0')).toString(),
+      dolares_5: (parseInt(counts[5] || '0')).toString(),
+      dolares_10: (parseInt(counts[10] || '0')).toString(),
+      dolares_20: (parseInt(counts[20] || '0')).toString(),
+      dolares_50: (parseInt(counts[50] || '0')).toString(),
+      dolares_100: (parseInt(counts[100] || '0')).toString(),
+      totalDolares: totalUSD.toString(),
+      totalDolaresCordobas: totalCordobas.toString(),
     };
 
     router.push({
