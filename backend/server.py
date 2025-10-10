@@ -98,9 +98,8 @@ def calculate_totals(arqueo_data: dict) -> dict:
     # Calculate total expenses
     total_gastos = sum(gasto.get('monto', 0) for gasto in arqueo_data.get('gastos', []))
     
-    # Calculate final total
+    # Calculate final total (ventas totales - gastos, sin fondo inicial)
     total_final = (
-        arqueo_data.get('fondo_inicial', 0) +
         arqueo_data.get('venta_tarjetas', 0) +
         total_cordobas +
         total_dolares_cordobas -
