@@ -28,37 +28,27 @@ API_URL = f"{BASE_URL}/api"
 print(f"Testing ARQUEO Backend API at: {API_URL}")
 print("=" * 60)
 
-# Test data for creating arqueo records
+# Test data for creating arqueo records - UPDATED FOR CALCULATION VERIFICATION
+# Using the exact sample data from the review request
 TEST_ARQUEO_DATA = {
-    "tienda": "Rusti-K",
-    "responsable": "Juan Pérez", 
-    "fondo_inicial": 1000.0,
-    "venta_tarjetas": 500.0,
-    "cordobas_1": 10,
-    "cordobas_5": 5,
-    "cordobas_10": 3,
-    "cordobas_20": 2,
-    "cordobas_50": 1,
-    "cordobas_100": 2,
-    "cordobas_500": 1,
-    "dolares_1": 5,
-    "dolares_5": 2, 
-    "dolares_10": 1,
-    "dolares_20": 0,
-    "dolares_50": 0,
-    "dolares_100": 0,
-    "gastos": [
-        {"concepto": "Combustible", "monto": 100.0},
-        {"concepto": "Mantenimiento", "monto": 50.0}
-    ]
+    "tienda": "Test Store",
+    "responsable": "Test User", 
+    "fondo_inicial": 2000.0,
+    "venta_tarjetas": 1000.0,
+    "cordobas_500": 2,  # 2 × 500 = 1000.0
+    "dolares_100": 1,   # 1 × 100 × 36.5 = 3650.0
+    "gastos": [{"concepto": "Test Expense", "monto": 200.0}]
 }
 
-# Expected calculations based on test data
-EXPECTED_TOTAL_CORDOBAS = (10*1 + 5*5 + 3*10 + 2*20 + 1*50 + 2*100 + 1*500)  # 855
-EXPECTED_TOTAL_DOLARES = (5*1 + 2*5 + 1*10 + 0*20 + 0*50 + 0*100)  # 25
-EXPECTED_TOTAL_DOLARES_CORDOBAS = 25 * 36.5  # 912.5
-EXPECTED_TOTAL_GASTOS = 100.0 + 50.0  # 150
-EXPECTED_TOTAL_FINAL = 1000.0 + 500.0 + 855 + 912.5 - 150  # 3117.5
+# Expected calculations based on review request sample data
+# Key verification: total_final should EXCLUDE fondo_inicial
+EXPECTED_TOTAL_CORDOBAS = 2 * 500  # 1000.0
+EXPECTED_TOTAL_DOLARES = 1 * 100   # 100.0
+EXPECTED_TOTAL_DOLARES_CORDOBAS = 100.0 * 36.5  # 3650.0
+EXPECTED_TOTAL_GASTOS = 200.0
+# CRITICAL: Total Final = venta_tarjetas + total_cordobas + total_dolares_cordobas - total_gastos
+# Should NOT include fondo_inicial (2000.0)
+EXPECTED_TOTAL_FINAL = 1000.0 + 1000.0 + 3650.0 - 200.0  # 5450.0
 
 def test_root_endpoint():
     """Test GET /api/ - Root endpoint"""
