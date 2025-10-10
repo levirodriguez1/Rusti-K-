@@ -44,7 +44,7 @@ const Step6Screen = () => {
     const totalDolaresCordobas = parseFloat(params.totalDolaresCordobas as string) || 0;
     const totalGastos = parseFloat(params.totalGastos as string) || 0;
     
-    const totalFinal = fondoInicial + ventaTarjetas + totalCordobas + totalDolaresCordobas - totalGastos;
+    const totalFinal = ventaTarjetas + totalCordobas + totalDolaresCordobas - totalGastos;
 
     setTotals({
       fondoInicial,
