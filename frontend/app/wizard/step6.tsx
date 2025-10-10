@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -16,27 +16,18 @@ const EXCHANGE_RATE = 36.5;
 const Step6Screen = () => {
   const params = useLocalSearchParams();
   const [isConfirmed, setIsConfirmed] = useState(false);
-  const [gastos, setGastos] = useState([]);
-  const [totals, setTotals] = useState({
-    fondoInicial: 0,
-    ventaTarjetas: 0,
-    totalCordobas: 0,
-    totalDolares: 0,
-    totalDolaresCordobas: 0,
-    totalGastos: 0,
-    totalFinal: 0,
-  });
 
-  useEffect(() => {
-    // Parse gastos from JSON string
+  // Parse gastos safely
+  const gastos = useMemo(() => {
     try {
-      const gastosData = params.gastos ? JSON.parse(params.gastos as string) : [];
-      setGastos(gastosData);
+      return params.gastos ? JSON.parse(params.gastos as string) : [];
     } catch (e) {
-      setGastos([]);
+      return [];
     }
+  }, [params.gastos]);
 
-    // Calculate all totals
+  // Calculate all totals using useMemo to prevent re-renders
+  const totals = useMemo(() => {
     const fondoInicial = parseFloat(params.fondoInicial as string) || 0;
     const ventaTarjetas = parseFloat(params.ventaTarjetas as string) || 0;
     const totalCordobas = parseFloat(params.totalCordobas as string) || 0;
@@ -46,7 +37,7 @@ const Step6Screen = () => {
     
     const totalFinal = ventaTarjetas + totalCordobas + totalDolaresCordobas - totalGastos;
 
-    setTotals({
+    return {
       fondoInicial,
       ventaTarjetas,
       totalCordobas,
@@ -54,8 +45,15 @@ const Step6Screen = () => {
       totalDolaresCordobas,
       totalGastos,
       totalFinal,
-    });
-  }, []); // Remove params dependency to prevent infinite loop
+    };
+  }, [
+    params.fondoInicial,
+    params.ventaTarjetas, 
+    params.totalCordobas,
+    params.totalDolares,
+    params.totalDolaresCordobas,
+    params.totalGastos
+  ]);
 
   const handleNext = () => {
     if (!isConfirmed) {
