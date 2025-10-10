@@ -111,11 +111,14 @@
     file: "server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: true
         agent: "main"
         comment: "Created FastAPI backend with ARQUEO models, calculations, and PDF generation"
+      - working: true
+        agent: "testing"
+        comment: "Comprehensive backend testing completed successfully. All 5 core endpoints working: GET /api/ (root), POST /api/arqueo (create), GET /api/arqueo (list), GET /api/arqueo/{id} (get specific), POST /api/arqueo/{id}/pdf (PDF generation). Calculations verified accurate for córdobas, dollars, exchange rate (36.5), expenses, and final totals. PDF generation working with valid base64 output. MongoDB integration functional. Minor: Error handling returns 500 instead of 404 for non-existent records, but core functionality unaffected."
 
 ## frontend:
   - task: "Create welcome screen with animation"
