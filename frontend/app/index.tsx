@@ -52,15 +52,21 @@ const WelcomeScreen = () => {
             }
           ]}
         >
-          <Image
-            source={{ uri: 'https://customer-assets.emergentagent.com/job_cash-flow-mobile/artifacts/nn5126wi_1760107880526.png' }}
-            style={styles.logo}
-            resizeMode="contain"
-            onError={(error) => {
-              console.log('Error loading logo:', error);
-            }}
-            defaultSource={require('../assets/images/icon.png')}
-          />
+          {!imageError ? (
+            <Image
+              source={{ uri: 'https://customer-assets.emergentagent.com/job_cash-flow-mobile/artifacts/nn5126wi_1760107880526.png' }}
+              style={styles.logo}
+              resizeMode="contain"
+              onError={() => {
+                console.log('Error loading logo, showing fallback');
+                setImageError(true);
+              }}
+            />
+          ) : (
+            <View style={styles.logoFallback}>
+              <Ionicons name="calculator" size={120} color="#4A9EFF" />
+            </View>
+          )}
         </Animated.View>
 
         {/* Title and Subtitle */}
