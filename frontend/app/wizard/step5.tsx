@@ -75,7 +75,7 @@ const Step5Screen = () => {
   const handleNext = () => {
     const gastosData = {
       gastos: JSON.stringify(gastos),
-      totalGastos,
+      totalGastos: totalGastos.toString(),
     };
 
     router.push({
