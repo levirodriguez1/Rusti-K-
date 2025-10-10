@@ -24,10 +24,10 @@ const WelcomeScreen = () => {
       }),
     ]).start();
 
-    // Navigate to wizard after 5 seconds
+    // Navigate to wizard after 4 seconds
     const timer = setTimeout(() => {
       router.replace('/wizard/step1');
-    }, 5000);
+    }, 4000);
 
     return () => clearTimeout(timer);
   }, []);
