@@ -38,7 +38,7 @@ const Step7Screen = () => {
     const totalDolares = parseFloat(params.totalDolares as string) || 0;
     const totalDolaresCordobas = parseFloat(params.totalDolaresCordobas as string) || 0;
     const totalGastos = parseFloat(params.totalGastos as string) || 0;
-    const totalFinal = fondoInicial + ventaTarjetas + totalCordobas + totalDolaresCordobas - totalGastos;
+    const totalFinal = ventaTarjetas + totalCordobas + totalDolaresCordobas - totalGastos;
 
     return `🏦 *ARQUEO - ${tienda}*
 👥 Responsable: ${responsable}
