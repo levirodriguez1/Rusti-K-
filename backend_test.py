@@ -54,11 +54,11 @@ TEST_ARQUEO_DATA = {
 }
 
 # Expected calculations based on test data
-EXPECTED_TOTAL_CORDOBAS = (10*1 + 5*5 + 3*10 + 2*20 + 1*50 + 2*100 + 1*500)  # 865
+EXPECTED_TOTAL_CORDOBAS = (10*1 + 5*5 + 3*10 + 2*20 + 1*50 + 2*100 + 1*500)  # 855
 EXPECTED_TOTAL_DOLARES = (5*1 + 2*5 + 1*10 + 0*20 + 0*50 + 0*100)  # 25
 EXPECTED_TOTAL_DOLARES_CORDOBAS = 25 * 36.5  # 912.5
 EXPECTED_TOTAL_GASTOS = 100.0 + 50.0  # 150
-EXPECTED_TOTAL_FINAL = 1000.0 + 500.0 + 865 + 912.5 - 150  # 3127.5
+EXPECTED_TOTAL_FINAL = 1000.0 + 500.0 + 855 + 912.5 - 150  # 3117.5
 
 def test_root_endpoint():
     """Test GET /api/ - Root endpoint"""
