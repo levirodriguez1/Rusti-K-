@@ -51,7 +51,7 @@ const WelcomeScreen = () => {
           ]}
         >
           <Image
-            source={{ uri: 'https://customer-assets.emergentagent.com/job_cash-flow-track-1/artifacts/7611wd3q_1760102559680.png' }}
+            source={{ uri: 'https://customer-assets.emergentagent.com/job_cash-flow-mobile/artifacts/2yi29vj5_e77de2eae2092522af691304b94a4297.jpg' }}
             style={styles.logo}
             resizeMode="contain"
           />
